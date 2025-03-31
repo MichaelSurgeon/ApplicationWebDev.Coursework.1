@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalaryHunter | Pay Calculator</title>
+    <script src="./Scripts/nav.js"></script>
+    <link rel="stylesheet" href="Stylesheets/global-styles.css">
+    <link rel="stylesheet" href="Stylesheets/stylesheet-takehome.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <h1><a href="/index.html">Salary Hunter</a></h1>
+                <div>
+                    <a href="/vacancies.html"><button id="nav-button">Vacancies</button></a>
+                </div>
+            </li>
+        </ul>
+        <img src="./Assets/images/hamburger-menu.png" onclick="openSideNav()" width="10%" alt="">
+        <div id="side-nav">
+            <div id="side-nav-top">
+                <h1 id="side-nav-heading"><a href="/index.html">SH</a></h1>
+                <img src="./Assets/images/close-icon.svg" onclick="closeSideNav()" width="25px" alt="">
+            </div>
+            <div id="side-nav-content">
+                <h3><a href="takehome.html">Pay Calculator</a></h3>
+                <h3><a href="vacancies.html">Vacancies</a></h3>
+            </div>
+        </div>
+    </nav>
+    <header>
+        <div id="header-container">
+            <div id="header-container-content">
+                <h1>Take Home Pay</h1>
+                <p>Eliminate the confusion of your payslip and use our calculator to check your take home pay!
+                   our calculator allows you to enter various data points and it will then work out your per hour, week, month and year
+                   take home pay!
+                </p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="calculator-results">
+            <div class="section-card">
+                <h1>Calculator Input</h1>
+                <div id="calculator-input-form">         
+                    <form>
+                        <label for="jobTitle">Job Title</label>
+                        <input type="text" min="0" id="jobTitle" name="jobTitle" placeholder="Engineer" required maxlength="50">
+                        <label for="grossPay">Gross Pay</label>
+                        <input type="number" min="0" id="grossPay" name="grossPay" placeholder="40000" required>
+                        <label for="timeframe">Timeframe</label>
+                        <select id="timeframe" name="timeframe">
+                            <option value="yearly">Yearly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="hourly">Hourly</option>
+                        </select>     
+                        <label for="hoursPerWeek">Hours Per Week</label>
+                        <input type="number" min="0" step="0.1" id="hoursPerWeek" name="hoursPerWeek" placeholder="40" required>
+                        <label for="taxRate">Tax Rate</label>
+                        <input type="number" min="0" id="taxRate" name="taxRate" placeholder="20" required>
+                        <label type="number" for="niRate">NI Rate</label> 
+                        <input type="number" min="0" id="niRate" name="niRate" placeholder="10" required>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+            <div class="section-card">
+                <h1>Recent Result</h1>
+                <div id="recent-result">
+                    <div id="recent-result-content">                    
+                        <h2>Software Engineer</h2>
+                        <p>Working 35 hours a week for a gross pay of £4000 per Month with 20% Tax and 12% NI results in a take-home pay of</p>
+                        <h3>Yearly</h3>
+                        <p>£12,000</p>
+                        <h3>Monthly</h3>
+                        <p>£12,000</p>
+                        <h3>Weekly</h3>
+                        <p>£12,000</p>
+                        <h3>Daily</h3>
+                        <p>£12,000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card">
+                <h1>Results paginated display</h1>
+            </div>
+        </section>
+    </main>
+    <script src="./Scripts/takehome.js"></script>
+</body>
+
+</html>

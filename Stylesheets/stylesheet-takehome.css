@@ -1,0 +1,135 @@
+header {
+    background-image: url("../Assets/images/Takehome/wave-top.svg");
+    min-height: 40vh;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+
+#header-container {
+    margin: auto;
+    width: 80%;
+    text-align: center;
+}
+
+#header-container h1 {
+    margin-top: 5em;
+}
+
+#header-container p {
+    margin: auto;
+    height: 100%;
+    width: 40%;
+    margin-bottom: 4em;
+    margin-top: 2em
+}
+
+#calculator-results {
+    height: 40em;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10em;
+}
+
+.section-card {
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-card h1 {
+    margin: auto;
+    margin-bottom: 1em;
+    z-index: 1;
+}
+
+#calculator-input-form {
+    display: flex;
+    width: 80%;
+    box-shadow: 0 1px 15px 3px;
+    margin: auto;
+    border-radius: 1em;
+}
+
+#calculator-input-form form {
+    width: 100%;
+    margin: auto;
+    flex-direction: column;
+    text-align: center;
+    display: flex;
+    gap: 0.5em;
+    padding: 1.5em;
+}
+
+#calculator-input-form input,
+#calculator-input-form select {
+    margin: auto;
+    border: 1px solid black;
+    height: 2em;
+    border-radius: 0.5em;
+    width: 50%;
+    text-align: center;
+}
+
+#calculator-input-form>form>input:last-child {
+    margin-top: 2em;
+    height: 3em;
+    background-color: var(--primary);
+    cursor: pointer;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+#calculator-input-form>form>input:last-child:hover {
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+}
+
+#recent-result {
+    display: flex;
+    width: 80%;
+    box-shadow: 0 1px 15px 3px;
+    margin: auto;
+    border-radius: 1em;
+}
+
+#recent-result-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    gap: 1em;
+    padding: 1.5em
+}
+
+@media screen and (max-width: 900px) {
+
+    header {
+        background-image: url("../Assets/images/Takehome/wave-top-mobile.svg");
+        background-size: cover;
+    }
+
+
+    #header-container p {
+        width: 90%;
+    }
+
+
+    #calculator-results {
+        flex-direction: column;
+    }
+
+    #current-results,
+    #results-history {
+        width: 90%;
+    }
+}

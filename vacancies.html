@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalaryHunter | Vacancies</title>
+    <script src="./Scripts/nav.js"></script>
+    <link rel="stylesheet" href="Stylesheets/global-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <h1><a href="/index.html">Salary Hunter</a></h1>
+                <div>
+                    <a href="/takehome.html"><button id="nav-button">Pay Calculator</button></a>
+                </div>
+            </li>
+        </ul>
+        <img src="./Assets/images/hamburger-menu.png" onclick="openSideNav()" width="10%" alt="">
+        <div id="side-nav">
+            <div id="side-nav-top">
+                <h1 id="side-nav-heading"><a href="/index.html">SH</a></h1>
+                <img src="./Assets/images/close-icon.svg" onclick="closeSideNav()" width="25px" alt="">
+            </div>
+            <div id="side-nav-content">
+                <h3><a href="takehome.html">Pay Calculator</a></h3>
+                <h3><a href="vacancies.html">Vacancies</a></h3>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>

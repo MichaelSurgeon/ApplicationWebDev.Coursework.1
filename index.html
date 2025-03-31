@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalaryHunter | Home</title>
+    <script src="./Scripts/nav.js"></script>
+    <link rel="stylesheet" href="Stylesheets/stylesheet-home.css">
+    <link rel="stylesheet" href="Stylesheets/global-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <h1><a href="/index.html">Salary Hunter</a></h1>
+                <div>
+                    <a href="/takehome.html"><button id="nav-button">Pay Calculator</button></a>
+                    <a href="/vacancies.html"><button id="nav-button">Vacancies</button></a>
+                </div>
+            </li>
+        </ul>
+        <img src="./Assets/images/hamburger-menu.png" onclick="openSideNav()" width="10%" alt="">
+        <div id="side-nav">
+            <div id="side-nav-top">
+                <h1 id="side-nav-heading"><a href="/index.html">SH</a></h1>
+                <img src="./Assets/images/close-icon.svg" onclick="closeSideNav()" width="25px" alt="">
+            </div>
+            <div id="side-nav-content">
+                <h3><a href="takehome.html">Pay Calculator</a></h3>
+                <h3><a href="vacancies.html">Vacancies</a></h3>
+            </div>
+        </div>
+    </nav>
+    <header>
+        <div id="header-content-container">
+            <h2>Looking for the <span id="header-hero-title">perfect job?</span></h2>
+            <h3>We provide you with a way to look for vacancies along with providing you a take home pay calculator.
+            </h3>
+            <h3>Learn more</h3>
+            <a href="#section-1"><img src="./Assets/images/down-arrow-svgrepo-com.svg" width="25px" height="25px"></a>
+        </div>
+    </header>
+    <div id="section-break-1"></div>
+    <main>
+        <section id="section-1">
+            <div id="section-1-container">
+                <div id="section-1-left">
+                    <img src="./Assets/images/male-sect-1.png" />
+                </div>
+                <div id="section-1-right">
+                    <div id="section-1-right-content">
+                        <h1>Jobs without the fuss!</h1>
+                        <p>
+                            We have you covered, here at Salary Hunter we provide a one stop shop service where you can
+                            look for a job
+                            without the fuss! if your searching for a new job or just browsing to see if there is
+                            anything that tickles your
+                            fancy. Salary hunter has your back!
+                        </p>
+                        <a href="/vacancies.html"><button class="section-button">Take me to Vacancies</button></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div id="section-break-2"></div>
+        <section id="section-2">
+            <div id="section-2-card">
+                <h1>Take Home Pay Calculator</h1>
+                <img src="./Assets/images/calculator.png">
+                <p>Tired of not understanding your paycheck? Do you want to know an exact breakdown of your pay slip? We
+                    offer an easy to use take home pay calculator, simply put pop in your tax & national insurance
+                    percentage and get
+                    an easy to understand break down!
+                </p>
+                <a href="/takehome.html"><button class="section-button">Take me to the calculator</button></a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Designed & Created by Michael Surgeon ©2025</p>
+    </footer>
+</body>
+
+</html>

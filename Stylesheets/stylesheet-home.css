@@ -1,0 +1,248 @@
+/* Header
+   ============================= */
+
+header {
+    display: flex;
+    height: 95vh;
+    flex-direction: column;
+    background-image: url("../Assets/images/wave-header.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: var(--white);
+    margin-bottom: -1px;
+}
+
+#header-content-container {
+    box-shadow: 10px 10px 50px 3px;
+    padding: 5em;
+    border-radius: 2em;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+    justify-items: center;
+    width: 65%;
+    min-width: 65%
+}
+
+#header-content-container img {
+    margin-top: 1em;
+    border-width: thin;
+    padding: 0.5em;
+    border-radius: 2em;
+}
+
+#header-content-container img:hover {
+    background-color: var(--primary);
+}
+
+#header-content-container h2 {
+    flex: 1;
+    height: 2em;
+    font-size: 2em;
+}
+
+#header-content-container h3,
+#header-content-container button {
+    margin-top: 3em;
+    font-weight: 400;
+}
+
+#header-hero-title {
+    padding: 0.5em;
+    background-color: var(--black);
+    color: var(--white);
+}
+
+/* Section Break
+   ============================= */
+
+#section-break-1 {
+    background-image: url("/Assets/images/wave-top.svg");
+    height: 30em;
+    background-size: cover;
+    margin-bottom: -1px;
+}
+
+/* Section 1
+   ============================= */
+
+#section-1 {
+    width: 100%;
+    padding-bottom: 10em;
+    background-color: var(--primary);
+}
+
+#section-1-container {
+    display: flex;
+    width: 50%;
+    height: 100%;
+    padding-bottom: 1em;
+    border-radius: 2em;
+    margin: auto;
+    background-color: var(--white);
+    box-shadow: 10px 10px 50px 3px;
+    padding: 3em
+}
+
+#section-1-left {
+    display: flex;
+    align-items: center;
+    margin-top: 2em;
+    width: 100%;
+}
+
+#section-1-left img {
+    display: flex;
+    width: 80%;
+    margin: auto;
+    vertical-align: middle;
+}
+
+#section-1-right {
+    width: 80%;
+    height: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+#section-1-right-content h1 {
+    margin: 2em 0 2em 0em;
+}
+
+#section-1-right-content p {
+    margin-top: 2em;
+}
+
+/* Section 2
+   ============================= */
+
+
+#section-2 {
+    display: flex;
+    background-color: var(--white);
+    background-repeat: no-repeat;
+}
+
+#section-2-card {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    padding: 3em;
+    box-shadow: 0 0 1em 0.05em var(--black);
+    border-radius: 2em;
+}
+
+#section-2-card img {
+    width: 50%;
+}
+
+/* Section Break
+   ============================= */
+
+#section-break-2 {
+    background-image: url("/Assets/images/wave-bottom.svg");
+    background-position: center;
+    height: 15em;
+    background-size: cover;
+    margin-top: -1px;
+}
+
+/* Footer
+   ============================= */
+
+footer {
+    height: 20em;
+    width: 100%;
+    background: url("../Assets/images/wave-footer.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    display: flex;
+}
+
+footer p {
+    margin: auto;
+    margin-bottom: 2em;
+    color: var(--white);
+}
+
+/* Media Query (900px)
+   ============================= */
+
+@media screen and (max-width: 900px) {
+
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: "Roboto Mono";
+    }
+
+    header {
+        background-image: url("../Assets/images/wave-header-mobile.svg");
+        background-position: center;
+    }
+
+    #section-break-1 {
+        height: 15em;
+    }
+
+    #header-hero-title {
+        margin: 1em;
+        display: flex;
+        justify-content: center;
+        padding: 0.5em;
+        border: 2px solid var(--black);
+        background-color: var(--black);
+        color: var(--white);
+    }
+
+    #header-content-container {
+        padding: 3em;
+    }
+
+    #header-content-container h2 {
+        font-size: 1.5em;
+    }
+
+    #header-content-container h3 {
+        margin: 0;
+    }
+
+    #header-content-container h3:nth-child(3) {
+        margin-top: 2em;
+    }
+
+    #eader-content-container img {
+        background-color: red;
+    }
+
+    #section-1 {
+        padding-bottom: 5em;
+    }
+
+    #section-2 {
+        margin-top: 5em;
+    }
+
+    #section-1-container {
+        flex-wrap: wrap;
+    }
+
+    #section-1-left-2 {
+        order: 2
+    }
+
+    #section-1-right-2 {
+        order: 1
+    }
+
+    #section-1-right-content button {
+        border: 2px solid var(--black);
+    }
+
+    #section-2-card img {
+        width: 90%;
+    }
+}
