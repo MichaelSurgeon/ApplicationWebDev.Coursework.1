@@ -38,6 +38,7 @@ function setUpExpandableCard() {
         const expandableContent = element.closest('.vacancies-card').querySelector('.vacancies-card-expandable');
         const showLessButton = element.closest('.vacancies-card').querySelector('.vacancies-card-expandable-show-less');
         const showMoreButton = element.closest('.vacancies-card').querySelector('.vacancies-card-expandable-show-more');
+        showMoreButton.scrollIntoView();
 
         expandableContent.style.display = "block";
         showLessButton.style.display = "block";
@@ -49,9 +50,11 @@ function setUpExpandableCard() {
     showLessElements.forEach(element => element.addEventListener('click', (event) => {
         event.preventDefault();
 
+        const topOfContent = element.closest('.vacancies-card');
         const expandableContent = element.closest('.vacancies-card').querySelector('.vacancies-card-expandable');
         const showLessButton = element.closest('.vacancies-card').querySelector('.vacancies-card-expandable-show-less');
         const showMoreButton = element.closest('.vacancies-card').querySelector('.vacancies-card-expandable-show-more');
+        topOfContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         expandableContent.style.display = "none";
         showLessButton.style.display = "none";
