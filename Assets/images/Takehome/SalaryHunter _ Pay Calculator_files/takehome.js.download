@@ -1,0 +1,110 @@
+
+const historyLocalStorageKey = "calculation-history";
+const historyIdLocalStorageKey = "currHistoryId"
+const historyMax = 10;
+let history = [];
+let historyId = 0;
+
+window.addEventListener("load", (event) => {
+    localStorage.setItem(historyIdLocalStorageKey, 0);
+    let historyFromLocalStorage = JSON.parse(localStorage.getItem(historyLocalStorageKey));
+    if(Array.isArray(historyLocalStorageKey))
+    {
+        history = historyFromLocalStorage;
+
+        if(history.length == 1) {
+            document.getElementById("recent-result-content-left").style.visibility = "hidden";
+            document.getElementById("history-job-title").innerHTML = history[history.length - 1].jobTitle;
+        }
+
+        document.getElementById("history-job-title").innerHTML = history[history.length - 2].jobTitle;
+    } else {
+        document.getElementById("recent-result-content-right").style.visibility = "hidden";
+        document.getElementById("recent-result-content-left").style.visibility = "hidden";
+    }
+
+    // change this to later load
+});
+
+document.getElementById("history-right-arrow").addEventListener('click', (event) => {
+    event.preventDefault();
+    moveHistoryRight();
+})
+
+document.getElementById("history-left-arrow").addEventListener('click', (event) => {
+    event.preventDefault();
+    moveHistoryLeft();
+})
+
+document.getElementById("calculator-input-form").addEventListener('submit', (event) => {
+    event.preventDefault();
+    saveCalculation();
+    if(history.length > 1) {
+        document.getElementById("recent-result-content-right").style.visibility = "visible";
+        document.getElementById("recent-result-content-left").style.visibility = "visible";
+        document.getElementById("history-job-title").innerHTML = history[history.length - 2].jobTitle;
+        localStorage.setItem(historyIdLocalStorageKey, history.length - 2);
+    }
+    else
+    {
+        document.getElementById("history-job-title").innerHTML = history[history.length - 1].jobTitle;
+    }
+})
+
+function saveCalculation() {
+
+    let currStorage = localStorage.getItem(historyLocalStorageKey);
+
+    let obj = JSON.parse(currStorage);
+    if(Array.isArray(obj) && obj.length >= historyMax ) {
+        history.shift();
+    }
+
+    let jobTitle = document.getElementById("jobTitle").value;
+    let grossPay = document.getElementById("grossPay").value;
+    let timeFrame = document.getElementById("timeframe").value;
+    let hoursPerWeek = document.getElementById("hoursPerWeek").value;
+    let taxRate = document.getElementById("taxRate").value;
+    let niRate = document.getElementById("taxRate").value;
+
+    const calculation = {
+        id: historyId++,
+        jobTitle: jobTitle,
+        grossPay: grossPay,
+        timeFrame: timeFrame,
+        hoursPerWeek: hoursPerWeek,
+        taxRate: taxRate,
+        niRate: niRate
+    };
+
+    history.push(calculation);
+    localStorage.setItem(historyLocalStorageKey, JSON.stringify(history))
+}
+
+function moveHistoryLeft() {
+    let currHistoryId = parseInt(localStorage.getItem(historyIdLocalStorageKey));
+    if(currHistoryId <= 0) {
+        return;
+    }
+
+    currHistoryId--;
+
+
+    localStorage.setItem(historyIdLocalStorageKey, currHistoryId);
+    let historyToDisplay = history[currHistoryId];
+    document.getElementById("history-job-title").innerHTML = historyToDisplay.jobTitle;
+}
+
+function moveHistoryRight() {
+    let currHistoryId = parseInt(localStorage.getItem(historyIdLocalStorageKey));
+    currHistoryId++;
+
+    if(currHistoryId >= history.length) {
+        return;
+    }
+
+
+    localStorage.setItem(historyIdLocalStorageKey, currHistoryId);
+    let historyToDisplay = history[currHistoryId];
+    document.getElementById("history-job-title").innerHTML = historyToDisplay.jobTitle;
+}

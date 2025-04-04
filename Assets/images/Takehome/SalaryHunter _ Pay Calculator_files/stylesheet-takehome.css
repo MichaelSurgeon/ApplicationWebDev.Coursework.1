@@ -1,22 +1,25 @@
 header {
     background-image: url("../Assets/images/Takehome/wave-top.svg");
     min-height: 40vh;
+    background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
     flex-direction: column;
 }
 
+
 #header-container {
+    margin: auto;
     padding-top: 10em;
-    width: 100%;
+    width: 80%;
     text-align: center;
 }
 
 #header-container p {
     margin: auto;
     height: 100%;
-    max-width: 500px;
+    width: 40%;
     margin-bottom: 4em;
     margin-top: 2em
 }
@@ -24,17 +27,15 @@ header {
 #calculator-results {
     height: 100%;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: row;
 }
 
 .section-card {
+    height: 100%;
+    width: 90%;
+    margin: auto;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    width: 100%;
-    justify-content: center;
-    max-width: 450px;
-    margin: 10px 15px;
 }
 
 .section-card h1 {
@@ -42,22 +43,17 @@ header {
     margin-bottom: 1em;
 }
 
-.section-card:nth-last-child(-n+2) {
-    display: none;
-}
-
-#recent-result, #calculator-input-form  {
+#calculator-input-form, #recent-result {
     display: flex;
+    width: 80%;
     height: 100%;
     box-shadow: 0 1px 15px 3px;
+    margin: auto;
     border-radius: 1em;
-    padding: 2em;
 }
 
 #calculator-input-form form {
     width: 100%;
-    height: 90%;
-    margin: auto;
     flex-direction: column;
     text-align: center;
     display: flex;
@@ -66,10 +62,11 @@ header {
 
 #calculator-input-form input,
 #calculator-input-form select {
+    margin: auto;
     border: 1px solid black;
-    height: 3em;
-    border-radius: 1em;
-    width: 100%;
+    height: 2em;
+    border-radius: 0.5em;
+    width: 50%;
     text-align: center;
 }
 
@@ -79,8 +76,8 @@ header {
     background-color: var(--primary);
     cursor: pointer;
     color: white;
+    border: none;
     font-weight: bold;
-    border: 1px solid black;
 }
 
 #calculator-input-form>form>input:last-child:hover {
@@ -96,7 +93,6 @@ header {
 
 
 #recent-result {
-    position: relative;
     padding: 2em;
 }
 
@@ -105,6 +101,7 @@ header {
     display: flex;
     flex-direction: column;
     margin: auto;
+    width: 80%;
 }
 
 #recent-result-content-left, #recent-result-content-right {
@@ -112,6 +109,7 @@ header {
 }
 
 #recent-result-content-center {
+    margin: auto;
     text-align: center;
 }
 
@@ -123,45 +121,23 @@ header {
     margin-top: 1em;
 }
 
-#history-right-arrow:hover, #history-left-arrow:hover {
+#recent-result-content-left img, #recent-result-content-right img {
+    cursor: pointer;
+    border-radius: 5em;
+    padding: 0.3em;
+}
+
+#recent-result-content-left img:hover, #recent-result-content-right img:hover {
     background-color: var(--primary);
 }
 
-#history-right-arrow:active, #history-left-arrow:active {
+#recent-result-content-left img:active, #recent-result-content-right img:active {
     background-color: var(--white);
 }
 
-#history-right-arrow, #history-left-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    border-radius: 5em;
-    padding: 0.9em;
-}
 
-#history-right-arrow {
-    right: 0;
-    margin-right: 0.5em;
-}
+@media screen and (max-width: 1587px) {
 
-
-#history-left-arrow {
-    left: 0;
-    margin-left: 0.5em;
-}
-
-@media screen and (max-width: 500px) {
-    #recent-result-content h3, #recent-result-content p{
-        font-size: 0.8em;
-    }
-
-    #recent-result-content-center h3, #recent-result-content-center p  {
-        font-size: 0.8em;
-    }
-}
-
-@media screen and (max-width: 1356px) {
     header {
         background-image: url("../Assets/images/Takehome/wave-top-mobile.svg");
         background-size: cover;
@@ -181,21 +157,41 @@ header {
 
     #calculator-results {
         flex-direction: column;
-        align-items: center;
     }
 
     .section-card {
-        width: 100%;
         margin-bottom: 5em;
     }
 
+    #recent-result {
+        width: 80%;
+        padding: 0;
+    }
 
+    #recent-result-content h3, #recent-result-content p{
+        font-size: 0.8em;
+    }
+
+    #recent-result-content-center h3, #recent-result-content-center p  {
+        font-size: 0.8em;
+    }
+
+    
     #recent-result-content-left img:hover, #recent-result-content-right img:hover {
         background-color: white;
     }
 
-    #history-left-arrow, #history-right-arrow {
-        width: 25px;
+
+    #recent-result-content-right img, #recent-result-content-left img{
+        width: 18px;
+    }
+
+    #recent-result-content-left img {
+        margin-left: 1em;
+    }
+
+    #recent-result-content-right img {
+        margin-right: 1em;
     }
 
     #current-results,

@@ -1,0 +1,95 @@
+header {
+    min-height: 40vh;
+    background-image: url("../Assets/images/Takehome/wave-top.svg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+#header-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-top: 10em;
+    margin: 0 auto;
+}
+
+header p, header h1 {
+    margin: 10px;
+    max-width: 450px;
+}
+
+#vacancies-search-box {
+    margin-top: 1em;
+    height: 30px;
+    width: 70%;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 1em;
+}
+
+#vacancies-submit-button {
+    margin-top: 1em;
+    width: 20%;
+    border: 1px solid black;
+    border-radius: 1em;
+    height: 30px;
+    background-color: white;
+}
+
+#vacancies-submit-button:hover {
+    cursor: pointer;
+    background-color: var(--primary);
+    color: white;
+}
+
+/* #filters {
+    display: flex;
+    justify-content: center;
+}
+
+#filters button {
+    padding: 1em;
+} */
+
+
+#vacancies-list {
+    display: flex;
+    justify-content: center;
+    border-radius: 1em;
+    box-shadow: 0 1px 15px 3px;
+    max-width: 450px;
+    text-align: center;
+}
+
+#vacancies-card p, #vacancies-card h3{
+    margin: 10px;
+}
+
+#vacancies-card button {
+    margin: 5px;
+    border-radius: 1em;
+    width: 200px;
+    height: 30px;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    font-size: 14px;
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+    #vacancies-search-box {
+        width: 100%;
+    }
+
+    #vacancies-submit-button {
+        width: 40%;
+    }
+}

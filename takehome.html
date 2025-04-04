@@ -43,7 +43,7 @@
                 <h1>Take Home Pay</h1>
                 <p>Eliminate the confusion of your payslip and use our calculator to check your take home pay!
                    our calculator allows you to enter various data points and it will then work out your per hour, week, month and year
-                   take home pay!
+                   take home pay! You can then compare values of old entries by flicking through our history pane.
                 </p>
             </div>
         </div>
@@ -52,25 +52,25 @@
         <section id="calculator-results">
             <div class="section-card">
                 <h1>Calculator Input</h1>
-                <div id="calculator-input-form">         
+                <div id="calculator-input-form">
                     <form>
                         <label for="jobTitle">Job Title</label>
-                        <input type="text" min="0" id="jobTitle" name="jobTitle" placeholder="Engineer" required maxlength="50">
+                        <input type="text" id="jobTitle" name="jobTitle" placeholder="Engineer" required maxlength="50">
                         <label for="grossPay">Gross Pay</label>
-                        <input type="number" min="0" id="grossPay" name="grossPay" placeholder="40000" required>
+                        <input type="number" min="0" max="1000000" step="0.01" id="grossPay" name="grossPay" placeholder="40000" required>
                         <label for="timeframe">Timeframe</label>
                         <select id="timeframe" name="timeframe">
                             <option value="yearly">Yearly</option>
                             <option value="monthly">Monthly</option>
                             <option value="weekly">Weekly</option>
                             <option value="hourly">Hourly</option>
-                        </select>     
+                        </select>
                         <label for="hoursPerWeek">Hours Per Week</label>
-                        <input type="number" min="0" step="0.1" id="hoursPerWeek" name="hoursPerWeek" placeholder="40" required>
-                        <label for="taxRate">Tax Rate</label>
-                        <input type="number" min="0" id="taxRate" name="taxRate" placeholder="20" required>
-                        <label type="number" for="niRate">NI Rate</label> 
-                        <input type="number" min="0" id="niRate" name="niRate" placeholder="10" required>
+                        <input type="number" min="0" max="168" step="0.1" id="hoursPerWeek" name="hoursPerWeek" placeholder="37.5" required>
+                        <label for="taxRate">Tax Rate (%)</label>
+                        <input type="number" min="0" step ="0.01" max="100" id="taxRate" name="taxRate" placeholder="20" required>
+                        <label type="number" for="niRate">NI Rate (%)</label>
+                        <input type="number" min="0" step="0.01" max="100" id="niRate" name="niRate" placeholder="12" required>
                         <input type="submit" value="Submit">
                     </form>
                 </div>
@@ -78,26 +78,44 @@
             <div class="section-card">
                 <h1>Recent Result</h1>
                 <div id="recent-result">
-                    <div id="recent-result-content">                    
-                        <h2>Software Engineer</h2>
-                        <p>Working 35 hours a week for a gross pay of £4000 per Month with 20% Tax and 12% NI results in a take-home pay of</p>
+                    <div id="recent-result-content">
+                        <h2 id="recent-result-job-title">Software Engineer</h2>
+                        <p id="recent-result-text">Working 35 hours a week for a gross pay of £4000 per Month with 20% Tax and 12% NI results in a take-home pay of</p>
                         <h3>Yearly</h3>
-                        <p>£12,000</p>
+                        <p>£<span id="recent-result-yearly">12,000</span></p>
                         <h3>Monthly</h3>
-                        <p>£12,000</p>
+                        <p>£<span id="recent-result-monthly">12,000</span></p>
                         <h3>Weekly</h3>
-                        <p>£12,000</p>
-                        <h3>Daily</h3>
-                        <p>£12,000</p>
+                        <p>£<span id="recent-result-weekly">12,000</span></p>
+                        <h3>Hourly</h3>
+                        <p>£<span id="recent-result-hourly">12,000</span></p>
                     </div>
                 </div>
             </div>
             <div class="section-card">
-                <h1>Results paginated display</h1>
+                <h1>History (Last 10)</h1>
+                <div id="recent-result">
+                    <img id="history-left-arrow" src="./Assets/images/Takehome/history-arrow-left.svg" width="35PX" alt="">
+                    <div id="recent-result-content-center"">
+                        <h2 id="history-job-title">Software Engineer</h2>
+                        <p id="history-text">Working 35 hours a week for a gross pay of £4000 per Month with 20% Tax and 12% NI results in a take-home pay of</p>
+                        <h3>Yearly</h3>
+                        <p>£<span id="history-yearly">12,000</span></p>
+                        <h3 >Monthly</h3>
+                        <p>£<span id="history-monthly">12,000</span></p>
+                        <h3>Weekly</h3>
+                        <p>£<span id="history-weekly">12,000</span></p>
+                        <h3>Hourly</h3>
+                        <p>£<span id="history-hourly">12,000</span></p>
+                    </div>
+                    <img id="history-right-arrow" src="./Assets/images/Takehome/history-arrow-right.svg" width="35PX" alt="">
+                </div>
             </div>
         </section>
     </main>
+    <footer>
+        <p>Designed & Created by Michael Surgeon ©2025</p>
+    </footer>
     <script src="./Scripts/takehome.js"></script>
-</body>
-
+</body onload="loadHistory()>
 </html>

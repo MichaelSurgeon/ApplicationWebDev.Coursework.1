@@ -70,7 +70,8 @@ header {
 
 #section-1 {
     width: 100%;
-    padding-bottom: 10em;
+    padding-top: 5em;
+    padding-bottom: 5em;
     background-color: var(--primary);
 }
 
@@ -144,28 +145,9 @@ header {
 #section-break-2 {
     background-image: url("/Assets/images/wave-bottom.svg");
     background-position: center;
-    height: 15em;
+    height: 25em;
     background-size: cover;
     margin-top: -1px;
-}
-
-/* Footer
-   ============================= */
-
-footer {
-    height: 20em;
-    width: 100%;
-    background: url("../Assets/images/wave-footer.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    display: flex;
-}
-
-footer p {
-    margin: auto;
-    margin-bottom: 2em;
-    color: var(--white);
 }
 
 /* Media Query (900px)
@@ -176,7 +158,6 @@ footer p {
     * {
         margin: 0;
         padding: 0;
-        font-family: "Roboto Mono";
     }
 
     header {
@@ -218,8 +199,8 @@ footer p {
         background-color: red;
     }
 
-    #section-1 {
-        padding-bottom: 5em;
+    #section-break-2 {
+        height: 15em;
     }
 
     #section-2 {
