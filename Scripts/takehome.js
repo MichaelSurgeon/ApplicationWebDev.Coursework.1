@@ -3,6 +3,7 @@ const historyLocalStorageKey = "calculation-history";
 const historyIdLocalStorageKey = "currHistoryId"
 const historyMax = 10;
 let history = [];
+const formatOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
 
 window.addEventListener("load", (event) => {
     localStorage.setItem(historyIdLocalStorageKey, 0);
@@ -106,15 +107,13 @@ function calculateTakeHomeFromMonthly(input) {
     const yearlyTakeHome = (monthlyTakeHome * 12);
     const hourly = monthlyTakeHome / (input.hoursPerWeek * weeksPerMonth);
 
-    const formatOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-
     return new Calculation(
         yearlyTakeHome.toLocaleString(undefined, formatOptions),
         monthlyTakeHome.toLocaleString(undefined, formatOptions),
         weekly.toLocaleString(undefined, formatOptions),
         hourly.toLocaleString(undefined, formatOptions),
         input.jobTitle,
-        input.grossPay,
+        input.grossPay.toLocaleString(undefined, formatOptions),
         input.hoursPerWeek,
         input.taxRate,
         input.niRate,
@@ -133,15 +132,13 @@ function calculateTakeHomeFromYearly(input) {
     const weekly = yearlyTakeHome / numberOfWeeks;
     const hourly = yearlyTakeHome / (input.hoursPerWeek * numberOfWeeks);
 
-    const formatOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-
     return new Calculation(
         yearlyTakeHome.toLocaleString(undefined, formatOptions),
         monthlyTakeHome.toLocaleString(undefined, formatOptions),
         weekly.toLocaleString(undefined, formatOptions),
         hourly.toLocaleString(undefined, formatOptions),
         input.jobTitle,
-        input.grossPay,
+        input.grossPay.toLocaleString(undefined, formatOptions),
         input.hoursPerWeek,
         input.taxRate,
         input.niRate,
@@ -159,16 +156,13 @@ function calculateTakeHomeFromWeekly(input) {
     const monthlyTakeHome = yearlyTakeHome / 12;
     const hourly = yearlyTakeHome / (input.hoursPerWeek * numberOfWeeks);
 
-
-    const formatOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-
     return new Calculation(
         yearlyTakeHome.toLocaleString(undefined, formatOptions),
         monthlyTakeHome.toLocaleString(undefined, formatOptions),
         weekly.toLocaleString(undefined, formatOptions),
         hourly.toLocaleString(undefined, formatOptions),
         input.jobTitle,
-        input.grossPay,
+        input.grossPay.toLocaleString(undefined, formatOptions),
         input.hoursPerWeek,
         input.taxRate,
         input.niRate,
@@ -186,15 +180,13 @@ function calculateTakeHomeFromHourly(input) {
     const monthlyTakeHome = weekly * weeksPerMonth;
     const yearlyTakeHome = monthlyTakeHome * 12;
 
-    const formatOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-
     return new Calculation(
         yearlyTakeHome.toLocaleString(undefined, formatOptions),
         monthlyTakeHome.toLocaleString(undefined, formatOptions),
         weekly.toLocaleString(undefined, formatOptions),
         hourly.toLocaleString(undefined, formatOptions),
         input.jobTitle,
-        input.grossPay,
+        input.grossPay.toLocaleString(undefined, formatOptions),
         input.hoursPerWeek,
         input.taxRate,
         input.niRate,

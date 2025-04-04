@@ -1,6 +1,10 @@
 /* Header
    ============================= */
 
+main {
+    padding: 0 !important;
+}
+
 header {
     display: flex;
     height: 95vh;

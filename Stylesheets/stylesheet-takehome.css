@@ -113,6 +113,7 @@ header {
 
 #recent-result-content-center {
     text-align: center;
+    margin: auto;
 }
 
 #recent-result-content-center h3, #recent-result-content-center p, #recent-result-content h3, #recent-result-content p{

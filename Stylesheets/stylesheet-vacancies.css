@@ -56,33 +56,64 @@ header p, header h1 {
     padding: 1em;
 } */
 
+section {
+    padding-top: 1.5em;
+}
 
 #vacancies-list {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.vacancies-card {
+    margin: 1.5em;
     border-radius: 1em;
     box-shadow: 0 1px 15px 3px;
-    max-width: 450px;
+    width: 100%; 
+    max-width: 750px;
     text-align: center;
+    padding: 2em;
+    box-sizing: border-box; 
+    transition: all 0.3s ease;
 }
 
-#vacancies-card p, #vacancies-card h3{
-    margin: 10px;
+.vacancies-card-job-title {
+    padding-bottom: 1em;
 }
 
-#vacancies-card button {
-    margin: 5px;
+.vacancies-card-expandable {
+    display: none;
+    text-align: left;
+    font-size: 12px;
+    padding: 0 1.5em;
+}
+
+.vacancies-card-expandable p {
+    padding-bottom: 2em;
+}
+
+.vacancies-card-expandable-show-less {
+    display: none;
+}
+
+.vacancies-card button {
     border-radius: 1em;
-    width: 200px;
+    width: 60%;
     height: 30px;
-    border: none;
     background-color: var(--primary);
     color: white;
     font-size: 14px;
+    border: 1px solid black;
+    margin: 0 auto;
 }
 
-
-
+.vacancies-card button:hover {
+    cursor: pointer;
+    color: black;
+    background-color: white;
+}
 
 @media screen and (max-width: 600px) {
     #vacancies-search-box {
