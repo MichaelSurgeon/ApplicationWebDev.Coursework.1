@@ -1,58 +1,51 @@
+//  The code below handles all the logic for the takehome calculator page.
 
+// Local Storage Keys
 const historyLocalStorageKey = "calculation-history";
 const historyIdLocalStorageKey = "currHistoryId"
-const historyMax = 10;
+
+//reused vars
 let history = [];
+const historyMax = 10;
+const weeksPerMonth = 52 / 12;
+const numberOfWeeks = (365 / 7);
+
+//two decimal place format options for text.
 const formatOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
 
-window.addEventListener("load", (event) => {
+// handle page load
+function onLoad() {
     localStorage.setItem(historyIdLocalStorageKey, 0);
+
+    //load history from storage.
     let historyFromLocalStorage = JSON.parse(localStorage.getItem(historyLocalStorageKey));
+
     if(Array.isArray(historyFromLocalStorage))
     {
+        // display previous results
         history = historyFromLocalStorage;
-
-        if(history.length == 1) {
-            document.getElementById("history-container").style.display = "flex";
-            displayRecentResult(history[history.length - 1])
-            localStorage.setItem(historyIdLocalStorageKey, history.length - 1);
-        }
-
-        if(history.length > 1) {
-            document.getElementById("history-container").style.display = "flex";
-            displayRecentResult(history[history.length - 1])
-            displayHistory(history[history.length - 2]);
-            localStorage.setItem(historyIdLocalStorageKey, history.length - 2);
-            disableArrows(parseInt(localStorage.getItem(historyIdLocalStorageKey)));
-        }
+        displayCardsBasedOnHistoryLength(history);
     }
-});
+}
 
-document.getElementById("history-right-arrow").addEventListener('click', (event) => {
+// Handles submission of calculation form
+function handleFormSumbit(event) {
     event.preventDefault();
-    moveHistoryRight();
-})
 
-document.getElementById("history-left-arrow").addEventListener('click', (event) => {
-    event.preventDefault();
-    moveHistoryLeft();
-})
-
-document.getElementById("takehome-clear-history").addEventListener('click', (event) => {
-    localStorage.removeItem(historyLocalStorageKey);
-    location.reload();
-})
-
-document.getElementById("calculator-input-form").addEventListener('submit', (event) => {
-    event.preventDefault();
+    //perform the calculation & display cards
     performCalculation();
+    displayCardsBasedOnHistoryLength(history);
+}
 
+function displayCardsBasedOnHistoryLength(history) {
+    // display clear history button and recent result if only one result
     if(history.length == 1) {
         document.getElementById("history-container").style.display = "flex";
         displayRecentResult(history[history.length - 1])
         localStorage.setItem(historyIdLocalStorageKey, history.length - 1);
     }
 
+        // display clear history button, recent result & history card if more than one result
     if(history.length > 1) {
         document.getElementById("history-container").style.display = "flex";
         displayRecentResult(history[history.length - 1])
@@ -60,16 +53,19 @@ document.getElementById("calculator-input-form").addEventListener('submit', (eve
         localStorage.setItem(historyIdLocalStorageKey, history.length - 2);
         disableArrows(parseInt(localStorage.getItem(historyIdLocalStorageKey)));
     }
-})
+}
 
+// performs approprate calculation based on user input
 function performCalculation() {
-    let currStorage = localStorage.getItem(historyLocalStorageKey);
+    let storedHistory = localStorage.getItem(historyLocalStorageKey);
 
-    let obj = JSON.parse(currStorage);
+    // remove the oldest history object if the history has a length greater than 10.
+    let obj = JSON.parse(storedHistory);
     if(Array.isArray(obj) && obj.length >= historyMax ) {
         history.shift();
     }
 
+    // get input values
     let jobTitle = document.getElementById("jobTitle").value;
     let grossPay = parseFloat(document.getElementById("grossPay").value);
     let timeFrame = document.getElementById("timeframe").value;
@@ -83,11 +79,14 @@ function performCalculation() {
         timeFrame: timeFrame,
         hoursPerWeek: hoursPerWeek,
         taxRate: taxRate,
-        niRate: niRate
+        niRate: niRate,
+        taxDeduction: grossPay * (taxRate / 100),
+        niDeduction: grossPay * (niRate / 100)
     };
 
     let calculatedValues = {};
 
+    // based on the timeframe selected set calculated values to the appropriate value.
     switch(timeFrame){
         case("monthly"):
             calculatedValues = calculateTakeHomeFromMonthly(input);
@@ -103,15 +102,16 @@ function performCalculation() {
             break;
     }
 
+    // add the calculation to the global history (state)
     history.push(calculatedValues);
+
+    // add the newest calculation into local storage.
     localStorage.setItem(historyLocalStorageKey, JSON.stringify(history))
 }
 
+// calculates take home pay from a monthly time frame & returns appropriate values.
 function calculateTakeHomeFromMonthly(input) {
-    const weeksPerMonth = 52 / 12;
-    const taxDeduction = input.grossPay * (input.taxRate / 100);
-    const niDeduction = input.grossPay * (input.niRate / 100);
-    const monthlyTakeHome = (input.grossPay - taxDeduction - niDeduction);
+    const monthlyTakeHome = (input.grossPay - input.taxDeduction - input.niDeduction);
     const weekly = monthlyTakeHome / weeksPerMonth;
     const yearlyTakeHome = (monthlyTakeHome * 12);
     const hourly = monthlyTakeHome / (input.hoursPerWeek * weeksPerMonth);
@@ -130,13 +130,9 @@ function calculateTakeHomeFromMonthly(input) {
     );
 }
 
-
+// calculates take home pay from a yearly time frame & returns appropriate values.
 function calculateTakeHomeFromYearly(input) {
-    const taxDeduction = input.grossPay * (input.taxRate / 100);
-    const niDeduction = input.grossPay * (input.niRate / 100);
-
-    const numberOfWeeks = (365 / 7);
-    const yearlyTakeHome = input.grossPay - taxDeduction - niDeduction;
+    const yearlyTakeHome = input.grossPay - input.taxDeduction - input.niDeduction;
     const monthlyTakeHome = yearlyTakeHome / 12;
     const weekly = yearlyTakeHome / numberOfWeeks;
     const hourly = yearlyTakeHome / (input.hoursPerWeek * numberOfWeeks);
@@ -155,12 +151,9 @@ function calculateTakeHomeFromYearly(input) {
     );
 }
 
+// calculates take home pay from a weekly time frame & returns appropriate values.
 function calculateTakeHomeFromWeekly(input) {
-    const taxDeduction = input.grossPay * (input.taxRate / 100);
-    const niDeduction = input.grossPay * (input.niRate / 100);
-
-    const numberOfWeeks = (365 / 7);
-    const weekly = input.grossPay - taxDeduction - niDeduction;
+    const weekly = input.grossPay - input.taxDeduction - input.niDeduction;
     const yearlyTakeHome = weekly * numberOfWeeks;
     const monthlyTakeHome = yearlyTakeHome / 12;
     const hourly = yearlyTakeHome / (input.hoursPerWeek * numberOfWeeks);
@@ -179,12 +172,9 @@ function calculateTakeHomeFromWeekly(input) {
     );
 }
 
+// calculates take home pay from a hourly time frame & returns appropriate values.
 function calculateTakeHomeFromHourly(input) {
-    const taxDeduction = input.grossPay * (input.taxRate / 100);
-    const niDeduction = input.grossPay * (input.niRate / 100);
-
-    const weeksPerMonth = 52 / 12;
-    const hourly = input.grossPay - taxDeduction - niDeduction;
+    const hourly = input.grossPay - input.taxDeduction - input.niDeduction;
     const weekly = hourly * input.hoursPerWeek;
     const monthlyTakeHome = weekly * weeksPerMonth;
     const yearlyTakeHome = monthlyTakeHome * 12;
@@ -203,43 +193,34 @@ function calculateTakeHomeFromHourly(input) {
     );
 }
 
-
-function displayRecentResult(obj) {
+// display recentResult based on the inputed history.
+function displayRecentResult(history) {
     document.querySelector('#calculator-results .section-card:nth-last-child(2)').style.display = "flex";
 
-    document.getElementById("recent-result-job-title").innerHTML = obj.jobTitle;
+    document.getElementById("recent-result-job-title").innerHTML = history.jobTitle;
     document.getElementById("recent-result-text").innerHTML =
-    `Working ${obj.countOfHours} hours a week for a gross pay of £${obj.grossPay} per ${obj.timeFrame} with ${obj.taxRate}% Tax and ${obj.niRate}% NI results in a take-home pay of`;
-    document.getElementById("recent-result-yearly").innerHTML = obj.yearly;
-    document.getElementById("recent-result-monthly").innerHTML = obj.monthly;
-    document.getElementById("recent-result-weekly").innerHTML = obj.weekly;
-    document.getElementById("recent-result-hourly").innerHTML = obj.hourly;
+    `Working ${history.countOfHours} hours a week for a gross pay of £${history.grossPay} per ${history.timeFrame} with ${history.taxRate}% Tax and ${history.niRate}% NI results in a take-home pay of`;
+    document.getElementById("recent-result-yearly").innerHTML = history.yearly;
+    document.getElementById("recent-result-monthly").innerHTML = history.monthly;
+    document.getElementById("recent-result-weekly").innerHTML = history.weekly;
+    document.getElementById("recent-result-hourly").innerHTML = history.hourly;
 }
 
-function displayHistory(historyToDisplay) {
+// display history based on the inputed history.
+function displayHistory(history) {
 
     document.querySelector('#calculator-results .section-card:nth-last-child(1)').style.display = "flex";
 
-    document.getElementById("history-job-title").innerHTML = historyToDisplay.jobTitle;
+    document.getElementById("history-job-title").innerHTML = history.jobTitle;
     document.getElementById("history-text").innerHTML =
-    `Working ${historyToDisplay.countOfHours} hours a week for a gross pay of £${historyToDisplay.grossPay} per ${historyToDisplay.timeFrame} with ${historyToDisplay.taxRate}% Tax and ${historyToDisplay.niRate}% NI results in a take-home pay of`;
-    document.getElementById("history-yearly").innerHTML = historyToDisplay.yearly;
-    document.getElementById("history-monthly").innerHTML = historyToDisplay.monthly;
-    document.getElementById("history-weekly").innerHTML = historyToDisplay.weekly;
-    document.getElementById("history-hourly").innerHTML = historyToDisplay.hourly;
+    `Working ${history.countOfHours} hours a week for a gross pay of £${history.grossPay} per ${history.timeFrame} with ${history.taxRate}% Tax and ${history.niRate}% NI results in a take-home pay of`;
+    document.getElementById("history-yearly").innerHTML = history.yearly;
+    document.getElementById("history-monthly").innerHTML = history.monthly;
+    document.getElementById("history-weekly").innerHTML = history.weekly;
+    document.getElementById("history-hourly").innerHTML = history.hourly;
 }
 
-function displayLastTwoCards(itemToDisplay) {
-    if(history.length == 1) {
-        hideHistoryArrows("both");
-    }
-
-    const lastTwoCards = document.querySelectorAll('#calculator-results .section-card:nth-last-child(-n + 2)');
-        lastTwoCards.forEach(card => {
-            card.style.display = 'flex';
-    });
-}
-
+// handles when a user presses the left (back) arrow in history
 function moveHistoryLeft() {
     let currHistoryId = parseInt(localStorage.getItem(historyIdLocalStorageKey));
     if(currHistoryId <= 0) {
@@ -255,6 +236,7 @@ function moveHistoryLeft() {
     displayHistory(historyToDisplay);
 }
 
+// handles when a user presses the right (next) arrow in history
 function moveHistoryRight() {
     let currHistoryId = parseInt(localStorage.getItem(historyIdLocalStorageKey));
     currHistoryId++;
@@ -266,49 +248,33 @@ function moveHistoryRight() {
     displayHistory(historyToDisplay);
 }
 
+// handles which arrows should be displed or not depeding on what page.
 function disableArrows(currHistoryId) {
-
     if(currHistoryId >= 1) {
-        showHistoryArrow("left");
+        handleHistoryArrows("left", "visible");
     } else {
-        hideHistoryArrows("left");
+        handleHistoryArrows("left", "hidden");
     }
 
     if(currHistoryId == history.length - 1) {
-        hideHistoryArrows("right");
+        handleHistoryArrows("right", "hidden");
     } else {
-        showHistoryArrow("right");
+        handleHistoryArrows("right", "visible");
     }
 }
 
-function hideHistoryArrows(arrow) {
+// hide history arrows based on input
+function handleHistoryArrows(arrow, style) {
     switch(arrow) {
         case ("left"):
-            document.getElementById("history-left-arrow").style.visibility = "hidden";
+            document.getElementById("history-left-arrow").style.visibility = style;
             break;
         case ("right"):
-            document.getElementById("history-right-arrow").style.visibility = "hidden";
+            document.getElementById("history-right-arrow").style.visibility = style;
             break;
         case ("both"):
-            document.getElementById("history-right-arrow").style.visibility = "hidden";
-            document.getElementById("history-left-arrow").style.visibility = "hidden";
-            break;
-        default:
-            return;
-    }
-}
-
-function showHistoryArrow(arrow) {
-    switch(arrow) {
-        case ("left"):
-            document.getElementById("history-left-arrow").style.visibility = "visible";
-            break;
-        case ("right"):
-            document.getElementById("history-right-arrow").style.visibility = "visible";
-            break;
-        case ("both"):
-            document.getElementById("history-right-arrow").style.visibility = "visible";
-            document.getElementById("history-left-arrow").style.visibility = "visible";
+            document.getElementById("history-right-arrow").style.visibility = style;
+            document.getElementById("history-left-arrow").style.visibility = style;
             break;
         default:
             return;
@@ -329,3 +295,14 @@ class Calculation {
         this.timeFrame = timeFrame;
     }
 }
+
+// setup event listeners. 
+document.getElementById("takehome-clear-history").addEventListener('click', (event) => {
+    localStorage.removeItem(historyLocalStorageKey);
+    location.reload();
+})
+
+document.getElementById("calculator-input-form").addEventListener('submit', handleFormSumbit);
+document.getElementById("history-right-arrow").addEventListener('click', moveHistoryRight);
+document.getElementById("history-left-arrow").addEventListener('click', moveHistoryLeft);
+window.addEventListener("load", onLoad);

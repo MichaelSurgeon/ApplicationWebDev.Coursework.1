@@ -4,6 +4,7 @@
     --primary: #0099ff;
     --black: black;
     --white: white;
+    --border-radius: 2em;
 }
 
 /* GLOBAL Styles
@@ -48,7 +49,6 @@ nav {
     height: 45px;
     position: sticky;
     box-shadow: 0 0 1em 0.05em black;
-    background-color: white;
 }
 
 nav>ul {

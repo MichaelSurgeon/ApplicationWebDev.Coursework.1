@@ -1,12 +1,13 @@
+/* Header
+   ============================= */
+
 header {
-    min-height: 40vh;
     background-image: url("../Assets/images/Takehome/wave-top.svg");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     text-align: center;
 }
 
@@ -23,29 +24,37 @@ header p, header h1 {
     max-width: 450px;
 }
 
+#filter-warning {
+    font-size: 10px;
+    font-weight: bold;
+}
+
 #vacancies-search-box {
     margin-top: 1em;
     height: 30px;
     width: 70%;
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     border-radius: 1em;
 }
 
 #vacancies-submit-button {
     margin-top: 1em;
     width: 20%;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     border-radius: 1em;
     height: 30px;
-    background-color: white;
+    background-color: var(--white);
 }
 
 #vacancies-submit-button:hover {
     cursor: pointer;
     background-color: var(--primary);
-    color: white;
+    color: var(--white);
 }
+
+/* Filters
+   ============================= */
 
 #filters {
     display: flex;
@@ -68,9 +77,9 @@ header p, header h1 {
     right: 0;
     top: 40%;
     z-index: 1;
-    background: white;
+    background: var(--white);
     box-shadow: 0 1px 15px 3px;
-    border-radius: 2em;
+    border-radius: var(--border-radius);
     padding: 2em;
 }
 
@@ -84,7 +93,7 @@ header p, header h1 {
 
 #filters-pop-up-close:hover {
     background-color: var(--primary);
-    border-radius: 5em;
+    border-radius: var(--border-radius);
 }
 
 #filters-pop-up form {
@@ -113,16 +122,16 @@ header p, header h1 {
 #filters-submit {
     cursor: pointer;
     background-color: var(--primary);
-    color: white;
+    color: var(--white);
     height: 30px;
-    border: 1px solid black;
-    border-radius: 2em;
+    border: 1px solid var(--black);
+    border-radius: var(--border-radius);
     width: 100px;
 }
 
 #filters-submit:hover {
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
 }
 
 .filter-buble {
@@ -132,7 +141,7 @@ header p, header h1 {
     flex-direction: row;
     background-color: var(--primary);
     color: white;
-    border-radius: 2em;
+    border-radius: var(--border-radius);
 }
 
 .filter-buble p {
@@ -144,6 +153,9 @@ header p, header h1 {
     padding-top: 0.2em;
     cursor: pointer;
 }
+
+/* Vacancies cars, container styles
+   ============================= */
 
 section {
     padding-top: 1.5em;
@@ -174,14 +186,13 @@ section {
 
 .vacancies-card {
     margin: 1.5em;
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     box-shadow: 0 1px 15px 3px;
     width: 100%; 
     max-width: 750px;
     text-align: center;
     padding: 2em;
-    box-sizing: border-box; 
-    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .vacancies-card-job-title, .vacancies-card-job-general-info {
@@ -222,14 +233,14 @@ section {
     background-color: var(--primary);
     color: white;
     font-size: 14px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     margin: 0 auto;
 }
 
 .vacancies-card button:hover {
     cursor: pointer;
-    color: black;
-    background-color: white;
+    color: var(--black);
+    background-color: var(--white);
 }
 
 #vacancies-pagination {
@@ -244,17 +255,21 @@ section {
     width: 120px;
     height: 30px;
     border: 1px solid black;
-    border-radius: 2em;
+    border-radius: var(--border-radius);
     background-color: var(--primary);
-    color: white;
+    color: var(--white);
     cursor: pointer;
     display: none;
+    font-weight: bold;
 }
 
 #vacancies-next:hover, #vacancies-back:hover {
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
 }
+
+/* Media queries
+   ============================= */
 
 @media screen and (max-width: 600px) {
     #filters {

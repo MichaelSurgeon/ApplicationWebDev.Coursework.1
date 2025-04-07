@@ -19,7 +19,7 @@ header {
 #header-content-container {
     box-shadow: 10px 10px 50px 3px;
     padding: 5em;
-    border-radius: 2em;
+    border-radius: var(--border-radius);
     background-color: var(--white);
     display: flex;
     flex-direction: column;
@@ -34,7 +34,7 @@ header {
     margin-top: 1em;
     border-width: thin;
     padding: 0.5em;
-    border-radius: 2em;
+    border-radius: var(--border-radius);
 }
 
 #header-content-container img:hover {
@@ -84,7 +84,7 @@ header {
     width: 50%;
     height: 100%;
     padding-bottom: 1em;
-    border-radius: 2em;
+    border-radius: var(--border-radius);
     margin: auto;
     background-color: var(--white);
     box-shadow: 10px 10px 50px 3px;
@@ -136,7 +136,7 @@ header {
     text-align: center;
     padding: 3em;
     box-shadow: 0 0 1em 0.05em var(--black);
-    border-radius: 2em;
+    border-radius: var(--border-radius);
 }
 
 #section-2-card img {

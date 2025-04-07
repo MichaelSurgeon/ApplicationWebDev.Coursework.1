@@ -1,3 +1,6 @@
+/* Header
+   ============================= */
+
 header {
     background-image: url("../Assets/images/Takehome/wave-top.svg");
     background-repeat: no-repeat;
@@ -19,6 +22,9 @@ header {
     margin-bottom: 2em;
     margin-top: 2em
 }
+
+/* Results
+   ============================= */
 
 #calculator-results {
     height: 100%;
@@ -65,9 +71,9 @@ header {
 
 #calculator-input-form input,
 #calculator-input-form select {
-    border: 1px solid black;
+    border: 1px solid var(--black);
     height: 3em;
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     width: 100%;
     text-align: center;
 }
@@ -77,20 +83,20 @@ header {
     height: 3em;
     background-color: var(--primary);
     cursor: pointer;
-    color: white;
+    color: var(--white);
     font-weight: bold;
-    border: 1px solid black;
+    border: 1px solid var(--black);
 }
 
 #calculator-input-form>form>input:last-child:hover {
-    background-color: white;
-    border: 1px solid black;
-    color: black;
+    background-color: var(--white);
+    border: 1px solid var(--black);
+    color: var(--black);
 }
 
 #calculator-input-form>form>input:last-child:active {
    background-color: var(--primary);
-   color: white;
+   color: var(--white);
 }
 
 #recent-result {
@@ -135,7 +141,7 @@ header {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    border-radius: 5em;
+    border-radius: var(--border-radius);
     padding: 0.9em;
 }
 
@@ -153,22 +159,27 @@ header {
     display: none;
 }
 
+/* History Button
+   ============================= */
+
 #takehome-clear-history {
     margin: 2.5em auto;
     width: 150px;
     height: 40px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     border-radius: 1em;
     background-color: var(--primary);
-    color: white;
+    color: var(--white);
     cursor: pointer;
 }
 
 #takehome-clear-history:hover {
-    background-color: white;
-    color: black;
+    background-color: var(--white);
+    color: var(--black);
 }
 
+/* Media Queries
+   ============================= */
 
 @media screen and (max-width: 500px) {
     #recent-result-content h3, #recent-result-content p{
@@ -208,9 +219,8 @@ header {
         margin-bottom: 5em;
     }
 
-
     #recent-result-content-left img:hover, #recent-result-content-right img:hover {
-        background-color: white;
+        background-color: var(--white);
     }
 
     #history-left-arrow, #history-right-arrow {

@@ -1,46 +1,61 @@
+//  The code below handles all the logic for the vacancies page.
+
 let filteredData = []
 let currPageSize = 10;
 
+// handles when the page loads.
 async function load(event) {
     event.preventDefault();
 
+    // if filters exist filter on the existing data.
     const filters = getFilters();
-    filterOnExistingData(filters);
-
-    url = getUrlFromSearchFilter(filters);
-
-    const data = await GetDataAsync(url);
-    
-    if(!data) {
+    const completed = await filterOnExistingData(filters);
+    if (completed) {
         return;
     }
 
+    // get url based on the filters
+    url = getUrlFromSearchFilter(filters);
+
+    // get data frome endpoint
+    const data = await GetDataAsync(url);
+
+    // early return if no data
+    if (!data) {
+        return;
+    }
+
+    // get filtered data and set up pagination buttons
     filteredData = getLocationFilteredData(filters, data)
     setPaginationOnLoad(filteredData);
 
+    // generate the vacancies cards.
     await GenerateData(filteredData.slice(0, 10));
 }
 
+// gets data based on the existing filters.
 async function filterOnExistingData(filters) {
     const locationFilter = filters.get("location");
     const searchFilter = filters.get("search");
 
-    if(locationFilter && filteredData.length > 0) {
-        if(searchFilter){
-            filteredData = filteredData.filter(data => 
+    if (locationFilter && filteredData.length > 0) {
+        if (searchFilter) {
+            filteredData = filteredData.filter(data =>
                 data.title.toLowerCase().includes(searchFilter.toLowerCase())
             );
             await GenerateData(filteredData.slice(0, 10));
-            return;
+            return true;
         }
 
         filteredData = getLocationFilteredData(filters, filteredData)
         await GenerateData(filteredData.slice(0, 10));
     }
+    return false;
 }
 
+// set up pagination buttons on load.
 function setPaginationOnLoad(data) {
-    if(data.length < 10) {
+    if (data.length < 10) {
         document.getElementById("vacancies-next").style.display = "none";
         document.getElementById("vacancies-back").style.display = "none";
     } else {
@@ -49,14 +64,16 @@ function setPaginationOnLoad(data) {
 
 }
 
+// based on the filters i.e. search filter get the correct url to send.
 function getUrlFromSearchFilter(filters) {
     let url = "https://api.lmiforall.org.uk/api/v1/vacancies/search";
     const searchFilter = filters.get("search");
 
-    if(searchFilter) {
+    // if search filter add keyword to url and return.
+    if (searchFilter) {
         const existingSearchChip = document.querySelector(".filter-buble[filter-chip-type='search']");
-        if(!existingSearchChip) {
-        createFilterChips(searchFilter, "search");
+        if (!existingSearchChip) {
+            createFilterChips(searchFilter, "search");
         }
 
         url = url + `?keywords=${searchFilter}`;
@@ -65,76 +82,80 @@ function getUrlFromSearchFilter(filters) {
     return url;
 }
 
+// get daata filterd by location & create approprate filter chip.
 function getLocationFilteredData(filters, data) {
     const locationFilter = filters.get("location");
-    
-    if(locationFilter) {
+
+    if (locationFilter) {
         const existingLocationChip = document.querySelector(".filter-buble[filter-chip-type='location']");
-        if(!existingLocationChip) {
-        createFilterChips(locationFilter, "location");
+        if (!existingLocationChip) {
+            createFilterChips(locationFilter, "location");
         }
 
-        let filteredData = [];
-        data.forEach(job => {
-            if(job.location.location.includes(locationFilter)) {
-                filteredData.push(job);
-            }
-        })
-        return filteredData;
+        return data.filter(job => job.location.location.includes(locationFilter));
     }
     return data;
 }
 
+// get data based on the url with a retry poilicy to handle potential server issues like 429 or 503s.
 async function GetDataAsync(url) {
-    try {
-        let response = await fetch(url);
+    const maxRetries = 5;
+    let retries = 0;
 
-        if(response.status != 200)
-        {
-            console.log("Error - Status Code: " + response.status);
-            setTimeout(async function() 
-            { 
-                response = await fetch(url); 
-            }, 2000);
-            return;
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    while (retries < maxRetries) {
+        try {
+            let response = await fetch(url);
+
+            if (!response.ok) {
+                console.log(`Error (Retrying in 2 seconds) - Status Code: ${response.status}`);
+                retries++;
+                document.getElementById("vacancies-spinner").style.display = "flex";
+                await sleep(2000);
+                continue;
+            }
+
+            const json = await response.json();
+            return json;
+        } catch (error) {
+            retries++;
+            await sleep(2000);
         }
-
-        if(response) {
-            const json = await response.json();  
-            return json; 
-        }
-
-        return null;
-    } catch (error) {
-        console.error('Error:', error);
     }
+
+    console.log('Max retries reached. Request failed.');
+    return null;
 }
 
+// generate the vacancies cards based on data input
 async function GenerateData(data) {
     const card = document.getElementsByClassName("vacancies-card");
     const cardsContainer = document.getElementById("vacancies-cards");
     const noVacancies = document.getElementById("no-vacancies");
     const pagination = document.getElementById("vacancies-pagination");
+    const spinnerIcon = document.getElementById("vacancies-spinner");
 
     cardsContainer.style.display = "none";
     pagination.style.display = "none";
 
+    // remove all cards if any exist so we can create new ones
     while (card.length > 0) {
-        card[0].remove(); 
-    }    
-    
-    let spinnerIcon = document.getElementById("vacancies-spinner");
+        card[0].remove();
+    }
+
     spinnerIcon.style.display = "block";
 
-    if(data.length <= 0){
+    if (data.length <= 0) {
         noVacancies.style.display = "block";
-    } else  {
+    } else {
         noVacancies.style.display = "none";
     }
 
+    // for each vacancy try and get the correct description & tasks from the sefcond endpoint
     for (let job of data) {
         let jobInformation = await GetDataAsync(`https://api.lmiforall.org.uk/api/v1/soc/search?q=${job.title}`);
-        
+
         for (let info of jobInformation) {
             for (let jt of info.add_titles) {
                 if (jt.toLowerCase() === job.title.toLowerCase()) {
@@ -144,6 +165,7 @@ async function GenerateData(data) {
             }
         }
 
+        // create a new vacancy card
         createNewVacanciesCard(job);
     }
 
@@ -155,6 +177,7 @@ async function GenerateData(data) {
     pagination.style.display = "flex";
 }
 
+// handles when a user submits a search filter
 async function handleSearchSubmit(event) {
     event.preventDefault();
     removeFilterFromState("search");
@@ -182,6 +205,7 @@ async function handleSearchSubmit(event) {
     load(event);
 }
 
+// open filter modal
 function openFilterOverlay(event) {
     event.preventDefault();
 
@@ -191,16 +215,18 @@ function openFilterOverlay(event) {
     const constDropDown = document.getElementById("filters-location");
     const dropDownOptions = Array.from(constDropDown.options);
 
-    if(dropDownOptions.length > 0){
+    // remove any existing dropdown options
+    if (dropDownOptions.length > 0) {
         dropDownOptions.forEach(option => {
             if (option.value !== 'any') {
-              option.remove();
+                option.remove();
             }
-          });
+        });
     }
 
+    // if there is filters & the dropdown exists we display all possible locations from the filtered data (no dupes using set)
     if (filteredData.length > 0 && constDropDown.value) {
-        const locations = [...new Set(filteredData.map(d => d.location.location))]; 
+        const locations = [...new Set(filteredData.map(d => d.location.location))];
         locations.forEach(loc => {
             let option = document.createElement("option");
             option.value = loc;
@@ -210,6 +236,7 @@ function openFilterOverlay(event) {
     }
 }
 
+// close filter modal
 function closeFilterOverlay(event) {
     event.preventDefault();
 
@@ -217,12 +244,14 @@ function closeFilterOverlay(event) {
     document.getElementById("filters-overlay").style.display = "none";
 }
 
+// handle when a user applies filter in the filter model
 function handleFilterSubmit(event) {
     event.preventDefault();
 
     const location = document.getElementById("filters-location").value;
 
-    if(location === "any"){
+    // if no filter applied close the modal.
+    if (location === "any") {
         closeFilterOverlay(event);
         return;
     }
@@ -233,18 +262,21 @@ function handleFilterSubmit(event) {
     document.body.style.overflow = "visible";
     document.getElementById("filters-overlay").style.display = "none";
 
+    // filter data by incoming location
     filteredData = filteredData.filter(data => data.location.location.includes(location));
 
-    if(filteredData.length < 10) {
+    if (filteredData.length < 10) {
         document.getElementById("vacancies-next").style.display = "none";
         document.getElementById("vacancies-back").style.display = "none";
     } else {
         document.getElementById("vacancies-next").style.display = "block";
     }
 
+    // create vacancies cards based on filtered data
     GenerateData(filteredData.slice(0, 10));
 }
 
+// sets up the expandable functionality such as the more & less button listeners.
 function setUpExpandableCard() {
     const showMoreElements = document.querySelectorAll('.vacancies-card-expandable-show-more');
 
@@ -259,7 +291,7 @@ function setUpExpandableCard() {
         showLessButton.style.display = "block";
         showMoreButton.style.display = "none";
     }));
-    
+
     const showLessElements = document.querySelectorAll('.vacancies-card-expandable-show-less');
 
     showLessElements.forEach(element => element.addEventListener('click', (event) => {
@@ -277,6 +309,8 @@ function setUpExpandableCard() {
     }));
 }
 
+
+// creates a vacancies card in the appropriate div based on the incoming data.
 function createNewVacanciesCard(data) {
     const element = document.getElementById("vacancies-cards");
 
@@ -291,7 +325,7 @@ function createNewVacanciesCard(data) {
     let generalInformationDiv = document.createElement("div");
     generalInformationDiv.classList.add("vacancies-card-general");
 
-    if(data.description && data.tasks){    
+    if (data.description && data.tasks) {
         let description = document.createElement("h3");
         description.innerHTML = "Description";
 
@@ -308,9 +342,8 @@ function createNewVacanciesCard(data) {
         generalInformationDiv.appendChild(generalInformationDesc);
         generalInformationDiv.appendChild(tasks)
         generalInformationDiv.appendChild(generalInformationTasks);
-    } 
-    else 
-    {
+    }
+    else {
         let general = document.createElement("h3");
         general.innerHTML = "General Information";
         generalInformationDiv.appendChild(general);
@@ -337,6 +370,7 @@ function createNewVacanciesCard(data) {
     element.appendChild(newCard);
 }
 
+// creates the expandable content within the vacancies card div.
 function createExpandableContent(data) {
     let expandableCard = document.createElement("div");
     expandableCard.classList.add("vacancies-card-expandable");
@@ -388,6 +422,7 @@ function createExpandableContent(data) {
     return expandableCard;
 }
 
+// creates filter chip based on content and type.
 function createFilterChips(content, type) {
     const filtersDiv = document.getElementById("filters");
 
@@ -407,10 +442,12 @@ function createFilterChips(content, type) {
     filterBubble.appendChild(filterCloseIcon);
     filtersDiv.appendChild(filterBubble);
 
-    setFilterListners();
+    removeFilterChip();
 }
 
-function setFilterListners() {
+
+// removes filter chip and reloads data.
+function removeFilterChip() {
     const filterClose = document.querySelectorAll('.filter-buble-img');
 
     filterClose.forEach(element => element.addEventListener('click', async (event) => {
@@ -425,28 +462,31 @@ function setFilterListners() {
     }));
 }
 
+// adds filters query param to url
 function addFilterToState(filterName, data) {
     const url = getUrl();
     url.searchParams.append(filterName, data);
     window.history.pushState({}, '', url);
 }
 
-function removeFilterFromState(filterName){
+// removes filters query param to url
+function removeFilterFromState(filterName) {
     const url = getUrl();
     url.searchParams.delete(filterName);
     window.history.pushState({}, '', url);
 }
 
+// gets all url search params
 function getFilters() {
     return getUrl().searchParams;
 }
 
-function getUrl(){
+// gets browsers current url
+function getUrl() {
     return new URL(window.location.href);
 }
 
-// Page issue h
-
+// handles next page button click, reloads data with next 10 items from data.
 async function nextPage() {
     const header = document.getElementById("header-container");
     header.scrollIntoView();
@@ -458,6 +498,7 @@ async function nextPage() {
     header.scrollIntoView();
 }
 
+// handles previous page button click, reloads data with previous 10 items from data.
 async function lastPage() {
     const header = document.getElementById("header-container");
     header.scrollIntoView();
@@ -468,20 +509,22 @@ async function lastPage() {
     currPageSize -= 10;
 }
 
+// handles what pagination button should be displayed if there is no content ahead or before.
 function validatePaginationButtons(value) {
-    if(value >= filteredData.length) {
+    if (value >= filteredData.length) {
         document.getElementById("vacancies-next").style.display = "none";
     } else {
         document.getElementById("vacancies-next").style.display = "block";
     }
-    
-    if(value >= 20) {
+
+    if (value >= 20) {
         document.getElementById("vacancies-back").style.display = "block";
     } else {
         document.getElementById("vacancies-back").style.display = "none";
     }
 }
 
+// sets up event listeners.
 document.getElementById("vacancies-submit-button").addEventListener('click', handleSearchSubmit);
 document.getElementById("filter-button").addEventListener('click', openFilterOverlay);
 document.getElementById("filters-pop-up-close").addEventListener('click', closeFilterOverlay);
