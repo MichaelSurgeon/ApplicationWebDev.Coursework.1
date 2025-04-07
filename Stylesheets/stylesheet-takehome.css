@@ -1,6 +1,5 @@
 header {
     background-image: url("../Assets/images/Takehome/wave-top.svg");
-    min-height: 40vh;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -17,7 +16,7 @@ header {
     margin: auto;
     height: 100%;
     max-width: 500px;
-    margin-bottom: 4em;
+    margin-bottom: 2em;
     margin-top: 2em
 }
 
@@ -34,7 +33,7 @@ header {
     width: 100%;
     justify-content: center;
     max-width: 450px;
-    margin: 10px 15px;
+    margin: 20px 15px;
 }
 
 .section-card h1 {
@@ -94,7 +93,6 @@ header {
    color: white;
 }
 
-
 #recent-result {
     position: relative;
     padding: 2em;
@@ -146,11 +144,31 @@ header {
     margin-right: 0.5em;
 }
 
-
 #history-left-arrow {
     left: 0;
     margin-left: 0.5em;
 }
+
+#history-container {
+    display: none;
+}
+
+#takehome-clear-history {
+    margin: 2.5em auto;
+    width: 150px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 1em;
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
+}
+
+#takehome-clear-history:hover {
+    background-color: white;
+    color: black;
+}
+
 
 @media screen and (max-width: 500px) {
     #recent-result-content h3, #recent-result-content p{

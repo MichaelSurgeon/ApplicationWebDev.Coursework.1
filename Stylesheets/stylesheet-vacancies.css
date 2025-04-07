@@ -104,18 +104,20 @@ header p, header h1 {
     cursor: pointer;
 }
 
-#filters-location {
-    width: 150px;
+#filters-location, #filters-job-title {
+    text-align: center;
+    height: 30px;
+    width: 250px;
 }
 
 #filters-submit {
     cursor: pointer;
     background-color: var(--primary);
     color: white;
-    height: 25px;
+    height: 30px;
     border: 1px solid black;
     border-radius: 2em;
-    width: 80px;
+    width: 100px;
 }
 
 #filters-submit:hover {
@@ -154,7 +156,19 @@ section {
     width: 100%;
 }
 
+#vacancies-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 #vacancies-spinner {
+    display: none;
+}
+
+#no-vacancies {
+    padding: 2em;
     display: none;
 }
 

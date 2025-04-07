@@ -2,27 +2,51 @@ let filteredData = []
 let currPageSize = 10;
 
 async function load(event) {
+    event.preventDefault();
 
     const filters = getFilters();
+    filterOnExistingData(filters);
 
     url = getUrlFromSearchFilter(filters);
 
     const data = await GetDataAsync(url);
     
     if(!data) {
-        alert("Request limit hit, (refresh after two seconds)")
         return;
     }
 
     filteredData = getLocationFilteredData(filters, data)
-    if(filteredData.length < 10) {
+    setPaginationOnLoad(filteredData);
+
+    await GenerateData(filteredData.slice(0, 10));
+}
+
+async function filterOnExistingData(filters) {
+    const locationFilter = filters.get("location");
+    const searchFilter = filters.get("search");
+
+    if(locationFilter && filteredData.length > 0) {
+        if(searchFilter){
+            filteredData = filteredData.filter(data => 
+                data.title.toLowerCase().includes(searchFilter.toLowerCase())
+            );
+            await GenerateData(filteredData.slice(0, 10));
+            return;
+        }
+
+        filteredData = getLocationFilteredData(filters, filteredData)
+        await GenerateData(filteredData.slice(0, 10));
+    }
+}
+
+function setPaginationOnLoad(data) {
+    if(data.length < 10) {
         document.getElementById("vacancies-next").style.display = "none";
         document.getElementById("vacancies-back").style.display = "none";
     } else {
         document.getElementById("vacancies-next").style.display = "block";
     }
 
-    await GenerateData(filteredData.slice(0, 10));
 }
 
 function getUrlFromSearchFilter(filters) {
@@ -87,14 +111,26 @@ async function GetDataAsync(url) {
 }
 
 async function GenerateData(data) {
-    const cards = document.getElementsByClassName("vacancies-card");
-    while (cards.length > 0) {
-        cards[0].remove(); 
+    const card = document.getElementsByClassName("vacancies-card");
+    const cardsContainer = document.getElementById("vacancies-cards");
+    const noVacancies = document.getElementById("no-vacancies");
+    const pagination = document.getElementById("vacancies-pagination");
+
+    cardsContainer.style.display = "none";
+    pagination.style.display = "none";
+
+    while (card.length > 0) {
+        card[0].remove(); 
     }    
     
     let spinnerIcon = document.getElementById("vacancies-spinner");
     spinnerIcon.style.display = "block";
 
+    if(data.length <= 0){
+        noVacancies.style.display = "block";
+    } else  {
+        noVacancies.style.display = "none";
+    }
 
     for (let job of data) {
         let jobInformation = await GetDataAsync(`https://api.lmiforall.org.uk/api/v1/soc/search?q=${job.title}`);
@@ -114,6 +150,9 @@ async function GenerateData(data) {
     spinnerIcon.style.display = "none";
 
     setUpExpandableCard();
+
+    cardsContainer.style.display = "flex";
+    pagination.style.display = "flex";
 }
 
 async function handleSearchSubmit(event) {
@@ -140,7 +179,7 @@ async function handleSearchSubmit(event) {
     document.getElementById('vacancies-form').reset();
     addFilterToState("search", searchQuery);
     createFilterChips(searchQuery, "search");
-    load();
+    load(event);
 }
 
 function openFilterOverlay(event) {
@@ -149,15 +188,24 @@ function openFilterOverlay(event) {
     document.body.style.overflow = "hidden";
     document.getElementById("filters-overlay").style.display = "block";
 
-    let filtersLocation = document.getElementById("filters-location");
+    const constDropDown = document.getElementById("filters-location");
+    const dropDownOptions = Array.from(constDropDown.options);
 
-    if (filteredData.length > 0 && filtersLocation) {
+    if(dropDownOptions.length > 0){
+        dropDownOptions.forEach(option => {
+            if (option.value !== 'any') {
+              option.remove();
+            }
+          });
+    }
+
+    if (filteredData.length > 0 && constDropDown.value) {
         const locations = [...new Set(filteredData.map(d => d.location.location))]; 
         locations.forEach(loc => {
             let option = document.createElement("option");
             option.value = loc;
             option.innerHTML = loc;
-            filtersLocation.appendChild(option);
+            constDropDown.appendChild(option);
         });
     }
 }
@@ -173,12 +221,28 @@ function handleFilterSubmit(event) {
     event.preventDefault();
 
     const location = document.getElementById("filters-location").value;
+
+    if(location === "any"){
+        closeFilterOverlay(event);
+        return;
+    }
+
     addFilterToState("location", location);
     createFilterChips(location, "location");
 
     document.body.style.overflow = "visible";
     document.getElementById("filters-overlay").style.display = "none";
-    load();
+
+    filteredData = filteredData.filter(data => data.location.location.includes(location));
+
+    if(filteredData.length < 10) {
+        document.getElementById("vacancies-next").style.display = "none";
+        document.getElementById("vacancies-back").style.display = "none";
+    } else {
+        document.getElementById("vacancies-next").style.display = "block";
+    }
+
+    GenerateData(filteredData.slice(0, 10));
 }
 
 function setUpExpandableCard() {
@@ -214,7 +278,7 @@ function setUpExpandableCard() {
 }
 
 function createNewVacanciesCard(data) {
-    const element = document.getElementById("vacancies-list");
+    const element = document.getElementById("vacancies-cards");
 
     let newCard = document.createElement("div");
     newCard.classList.add("vacancies-card");
@@ -256,7 +320,6 @@ function createNewVacanciesCard(data) {
         generalInformationDiv.appendChild(generalInformationGeneric);
     }
     newCard.appendChild(generalInformationDiv);
-
 
     let expandableContent = createExpandableContent(data);
     newCard.appendChild(expandableContent);
@@ -358,7 +421,7 @@ function setFilterListners() {
         const filterType = closestChip.getAttribute("filter-chip-type");
         closestChip.remove();
         removeFilterFromState(filterType);
-        load();
+        load(event);
     }));
 }
 

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SalaryHunter | Pay Calculator</title>
     <link rel="icon" type="image/x-icon" href="./Assets/images/favicon.ico">
-    <script src="./Scripts/nav.js"></script>
+    <script defer src="./Scripts/nav.js"></script>
+    <script defer src="./Scripts/takehome.js"></script>
     <link rel="stylesheet" href="Stylesheets/global-styles.css">
     <link rel="stylesheet" href="Stylesheets/stylesheet-takehome.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +51,9 @@
         </div>
     </header>
     <main>
+        <div id="history-container">
+            <button id="takehome-clear-history">Clear History</button>
+        </div>
         <section id="calculator-results">
             <div class="section-card">
                 <h1>Calculator Input</h1>
@@ -117,6 +121,5 @@
     <footer>
         <p>Designed & Created by Michael Surgeon ©2025</p>
     </footer>
-    <script src="./Scripts/takehome.js"></script>
 </body onload="loadHistory()>
 </html>

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SalaryHunter | Vacancies</title>
     <link rel="icon" type="image/x-icon" href="./Assets/images/favicon.ico">
-    <script src="./Scripts/nav.js"></script>
+    <script defer src="./Scripts/nav.js"></script>
+    <script defer src="./Scripts/vacancies.js"></script>
     <link rel="stylesheet" href="Stylesheets/global-styles.css">
     <link rel="stylesheet" href="Stylesheets/stylesheet-vacancies.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +25,7 @@
                 <h3>Filters</h3>
                 <label>Location</label>
                 <select id="filters-location" name="location">
+                    <option value="any" selected>Any</option>
                 </select>
                 <input id="filters-submit" type="submit" value="Apply">
             </form>
@@ -71,6 +73,8 @@
             </div>
             <div id="vacancies-list">
                 <img id="vacancies-spinner" src="./Assets/Gifs/loading-spinner.gif" width="100px" alt="">
+                <h1 id="no-vacancies">No vacancies found</h1>
+                <div id="vacancies-cards"> </div>
             </div>
             <div id="vacancies-pagination">
                 <div id="pagination-left">
@@ -86,5 +90,4 @@
         <p>Designed & Created by Michael Surgeon ©2025</p>
     </footer>
 </body>
-<script src="./Scripts/vacancies.js"></script>
 </html>

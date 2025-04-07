@@ -13,11 +13,13 @@ window.addEventListener("load", (event) => {
         history = historyFromLocalStorage;
 
         if(history.length == 1) {
+            document.getElementById("history-container").style.display = "flex";
             displayRecentResult(history[history.length - 1])
             localStorage.setItem(historyIdLocalStorageKey, history.length - 1);
         }
 
         if(history.length > 1) {
+            document.getElementById("history-container").style.display = "flex";
             displayRecentResult(history[history.length - 1])
             displayHistory(history[history.length - 2]);
             localStorage.setItem(historyIdLocalStorageKey, history.length - 2);
@@ -36,16 +38,23 @@ document.getElementById("history-left-arrow").addEventListener('click', (event) 
     moveHistoryLeft();
 })
 
+document.getElementById("takehome-clear-history").addEventListener('click', (event) => {
+    localStorage.removeItem(historyLocalStorageKey);
+    location.reload();
+})
+
 document.getElementById("calculator-input-form").addEventListener('submit', (event) => {
     event.preventDefault();
     performCalculation();
 
     if(history.length == 1) {
+        document.getElementById("history-container").style.display = "flex";
         displayRecentResult(history[history.length - 1])
         localStorage.setItem(historyIdLocalStorageKey, history.length - 1);
     }
 
     if(history.length > 1) {
+        document.getElementById("history-container").style.display = "flex";
         displayRecentResult(history[history.length - 1])
         displayHistory(history[history.length - 2]);
         localStorage.setItem(historyIdLocalStorageKey, history.length - 2);
