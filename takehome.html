@@ -23,17 +23,17 @@
     <nav>
         <ul>
             <li>
-                <h1><a href="/index.html">Salary Hunter</a></h1>
-                <div>
-                    <a href="/vacancies.html"><button id="nav-button">Vacancies</button></a>
+                <h2><a href="/index.html">Salary Hunter</a></h2>
+                <div id="nav-buttons">
+                    <a href="/vacancies.html" class="nav-button">Vacancies</a>
                 </div>
             </li>
         </ul>
-        <img src="./Assets/images/hamburger-menu.png" onclick="openSideNav()" width="10%" alt="">
+        <img src="./Assets/images/hamburger-menu.png" onclick="openSideNav()" width="50" alt="hamburger-menu">
         <div id="side-nav">
             <div id="side-nav-top">
-                <h1 id="side-nav-heading"><a href="/index.html">SH</a></h1>
-                <img src="./Assets/images/close-icon.svg" onclick="closeSideNav()" width="25px" alt="">
+                <h2 id="side-nav-heading"><a href="/index.html">SH</a></h2>
+                <img src="./Assets/images/close-icon.svg" onclick="closeSideNav()" width="25" alt="close-icon">
             </div>
             <div id="side-nav-content">
                 <h3><a href="takehome.html">Pay Calculator</a></h3>
@@ -67,7 +67,7 @@
         <!-- Results Container -->
         <section id="calculator-results">
             <div class="section-card">
-                <h1>Calculator Input</h1>
+                <h2>Calculator Input</h2>
                 <div id="calculator-input-form">
                     <form>
                         <label for="jobTitle">Job Title</label>
@@ -85,15 +85,15 @@
                         <input type="number" min="0" max="168" step="0.1" id="hoursPerWeek" name="hoursPerWeek" placeholder="37.5" required>
                         <label for="taxRate">Tax Rate (%)</label>
                         <input type="number" min="0" step ="0.01" max="100" id="taxRate" name="taxRate" placeholder="20" required>
-                        <label type="number" for="niRate">NI Rate (%)</label>
+                        <label for="niRate">NI Rate (%)</label>
                         <input type="number" min="0" step="0.01" max="100" id="niRate" name="niRate" placeholder="12" required>
                         <input type="submit" value="Submit">
                     </form>
                 </div>
             </div>
             <div class="section-card">
-                <h1>Recent Result</h1>
-                <div id="recent-result">
+                <h2>Recent Result</h2>
+                <div class="recent-result">
                     <div id="recent-result-content">
                         <a id="recent-result-job-title-link"><h2 id="recent-result-job-title">Software Engineer</h2></a>
                         <p id="recent-result-text">Working 35 hours a week for a gross pay of £4000 per Month with 20% Tax and 12% NI results in a take-home pay of</p>
@@ -109,10 +109,10 @@
                 </div>
             </div>
             <div class="section-card">
-                <h1>History (Last 10)</h1>
-                <div id="recent-result">
-                    <img id="history-left-arrow" src="./Assets/images/Takehome/history-arrow-left.svg" width="35PX" alt="">
-                    <div id="recent-result-content-center"">
+                <h2>History (Last 10)</h2>
+                <div class="recent-result">
+                    <img id="history-left-arrow" src="./Assets/images/Takehome/history-arrow-left.svg" width="35" alt="arrow-left">
+                    <div id="recent-result-content-center">
                         <a id="history-job-title-link"><h2 id="history-job-title">Software Engineer</h2></a>
                         <p id="history-text">Working 35 hours a week for a gross pay of £4000 per Month with 20% Tax and 12% NI results in a take-home pay of</p>
                         <h3>Yearly</h3>
@@ -124,7 +124,7 @@
                         <h3>Hourly</h3>
                         <p>£<span id="history-hourly">12,000</span></p>
                     </div>
-                    <img id="history-right-arrow" src="./Assets/images/Takehome/history-arrow-right.svg" width="35PX" alt="">
+                    <img id="history-right-arrow" src="./Assets/images/Takehome/history-arrow-right.svg" width="35" alt="arrow-right">
                 </div>
             </div>
         </section>
@@ -135,5 +135,5 @@
     <footer>
         <p>Designed & Created by Michael Surgeon ©2025</p>
     </footer>
-</body onload="loadHistory()>
+</body>
 </html>

@@ -42,7 +42,7 @@ header {
     margin: 20px 15px;
 }
 
-.section-card h1 {
+.section-card h2 {
     margin: auto;
     margin-bottom: 1em;
 }
@@ -51,7 +51,7 @@ header {
     display: none;
 }
 
-#recent-result, #calculator-input-form  {
+.recent-result, #calculator-input-form  {
     display: flex;
     height: 100%;
     box-shadow: 0 1px 15px 3px;
@@ -99,7 +99,7 @@ header {
    color: var(--white);
 }
 
-#recent-result {
+.recent-result {
     position: relative;
     padding: 2em;
 }

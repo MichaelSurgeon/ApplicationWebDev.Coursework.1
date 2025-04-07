@@ -28,12 +28,17 @@ main, header {
 /* Reused Components
    ============================= */
 
-.section-button {
-    margin-top: 2em;
-    padding: 1em;
-    background-color: white;
+   .section-button {
+    display: inline-block;   
+    padding: 0.5em 1em;    
     border: 1px solid black;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
+    white-space: normal; 
+    width: auto;
+    max-width: 100%;
+    margin-top: 2em;
 }
 
 .section-button:hover {
@@ -61,7 +66,7 @@ nav>ul>li {
     justify-content: space-between;
 }
 
-nav>ul>li>h1 {
+nav>ul>li>h2 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,7 +76,7 @@ nav>ul>li>h1 {
 }
 
 
-nav>ul>li>h1>a {
+nav>ul>li>h2>a {
     cursor: pointer;
     text-decoration: none;
     color: #000;
@@ -81,17 +86,23 @@ nav>img {
     display: none;
 }
 
-#nav-button {
-    width: 10em;
-    height: 100%;
+#nav-buttons {
+ display: flex;
+ gap: 10px;
+}
+
+.nav-button {
+    padding: 0.6em;
     cursor: pointer;
     border: 1px solid black;
     font-family: inherit;
     font-weight: bold;
-    background-color: white;
+    text-decoration: none;
+    color: black;
+    margin: auto 0;
 }
 
-#nav-button:hover {
+.nav-button:hover {
     color: white;
     background-color: black;
 }
@@ -125,7 +136,7 @@ nav>img {
 }
 
 
-#side-nav-top h1 {
+#side-nav-top h2 {
     width: 2em;
     min-width: 1.5em
 }
