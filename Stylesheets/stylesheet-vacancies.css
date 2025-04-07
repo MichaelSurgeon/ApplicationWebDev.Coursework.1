@@ -47,14 +47,101 @@ header p, header h1 {
     color: white;
 }
 
-/* #filters {
+#filters {
     display: flex;
     justify-content: center;
 }
 
-#filters button {
+#filters-overlay {
+    display: none;
+    position: fixed;
+    background-color: rgba(36, 36, 36, 0.5);
+    height: 100vh;
+    width: 100%;
+}
+
+#filters-pop-up {
+    position: relative;
+    width: 250px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 40%;
+    z-index: 1;
+    background: white;
+    box-shadow: 0 1px 15px 3px;
+    border-radius: 2em;
+    padding: 2em;
+}
+
+#filters-pop-up-close {
+    position: absolute;
+    top: 15px;  
+    right: 25px; 
+    cursor: pointer;
+    padding: 0.5em;
+}
+
+#filters-pop-up-close:hover {
+    background-color: var(--primary);
+    border-radius: 5em;
+}
+
+#filters-pop-up form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+#filter-modal {
+    display: flex;
+}
+
+#filter-button {
+    margin: 0 auto;
     padding: 1em;
-} */
+    cursor: pointer;
+}
+
+#filters-location {
+    width: 150px;
+}
+
+#filters-submit {
+    cursor: pointer;
+    background-color: var(--primary);
+    color: white;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 2em;
+    width: 80px;
+}
+
+#filters-submit:hover {
+    background-color: white;
+    color: black;
+}
+
+.filter-buble {
+    margin: 0.5em;
+    padding: 0 1em;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 2em;
+}
+
+.filter-buble p {
+    font-size: 15px;
+    padding: 0.5em;
+}
+
+.filter-buble img {
+    padding-top: 0.2em;
+    cursor: pointer;
+}
 
 section {
     padding-top: 1.5em;
@@ -65,6 +152,10 @@ section {
     flex-direction: column;
     align-items: center;
     width: 100%;
+}
+
+#vacancies-spinner {
+    display: none;
 }
 
 .vacancies-card {
@@ -79,8 +170,20 @@ section {
     transition: all 0.3s ease;
 }
 
-.vacancies-card-job-title {
+.vacancies-card-job-title, .vacancies-card-job-general-info {
     padding-bottom: 1em;
+}
+
+.vacancies-card-general {
+    text-align: left;
+    font-size: 12px;
+    padding: 0 1.5em;
+}
+
+.vacancies-card-job-general-info {
+    text-align: left;
+    font-size: 12px;
+    padding: 0 1.5em;
 }
 
 .vacancies-card-expandable {
@@ -90,7 +193,7 @@ section {
     padding: 0 1.5em;
 }
 
-.vacancies-card-expandable p {
+.vacancies-card-expandable p, .vacancies-card-general p {
     padding-bottom: 2em;
 }
 
@@ -115,7 +218,37 @@ section {
     background-color: white;
 }
 
+#vacancies-pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#vacancies-next, #vacancies-back {
+    margin: 1em;
+    width: 120px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 2em;
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
+    display: none;
+}
+
+#vacancies-next:hover, #vacancies-back:hover {
+    background-color: white;
+    color: black;
+}
+
 @media screen and (max-width: 600px) {
+    #filters {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     #vacancies-search-box {
         width: 100%;
     }

@@ -17,6 +17,18 @@
 </head>
 
 <body>
+    <div id="filters-overlay">
+        <div id="filters-pop-up">
+            <form id="filters-pop-up-form">
+                <img id="filters-pop-up-close" src="./Assets/images/close-icon.svg" width="20px" alt="">
+                <h3>Filters</h3>
+                <label>Location</label>
+                <select id="filters-location" name="location">
+                </select>
+                <input id="filters-submit" type="submit" value="Apply">
+            </form>
+        </div>
+    </div>
     <nav>
         <ul>
             <li>
@@ -44,18 +56,29 @@
             <p>
                 Find your perfect job using Salary Hunters vacancies portal, simply browse through open vacancies or simply search the job title you are looking for!
             </p>
-            <form>
-                <input id="vacancies-search-box" type="text" placeholder="Software Engineer">
+            <form id="vacancies-form">
+                <input id="vacancies-search-box" required type="text" placeholder="Software Engineer">
                 <input id="vacancies-submit-button" type="submit" value="Search">
             </form>
         </div>
     </header>
     <main>
         <section>
-            <!-- <div id="filters">
-                <img src="./Assets/images/Vacancies/filter-icon.png" width="25px" alt="">
-            </div> -->
+            <div id="filter-modal">
+                <img id="filter-button" src="./Assets/images/Vacancies/filter-icon.png" width="25px" alt="filter icon">
+            </div>
+            <div id="filters">
+            </div>
             <div id="vacancies-list">
+                <img id="vacancies-spinner" src="./Assets/Gifs/loading-spinner.gif" width="100px" alt="">
+            </div>
+            <div id="vacancies-pagination">
+                <div id="pagination-left">
+                    <button id="vacancies-back">Back</button>
+                </div>
+                <div id="pagination-right">
+                    <button id="vacancies-next">Next</button>
+                </div>
             </div>
         </section>
     </main>
