@@ -281,6 +281,11 @@ function handleHistoryArrows(arrow, style) {
     }
 }
 
+function onJobLink(id) {
+    const searchParam = document.getElementById(id).textContent;
+    window.location.href = `vacancies.html?search=${searchParam}`
+}
+
 class Calculation {
     constructor(yearly, monthly, weekly, hourly, jobTitle, grossPay, hours, taxRate, niRate, timeFrame) {
         this.yearly = yearly;
@@ -305,4 +310,11 @@ document.getElementById("takehome-clear-history").addEventListener('click', (eve
 document.getElementById("calculator-input-form").addEventListener('submit', handleFormSumbit);
 document.getElementById("history-right-arrow").addEventListener('click', moveHistoryRight);
 document.getElementById("history-left-arrow").addEventListener('click', moveHistoryLeft);
+document.getElementById("history-job-title-link").addEventListener('click', () => {
+    onJobLink("history-job-title")
+});
+document.getElementById("recent-result-job-title-link").addEventListener('click', () => {
+    onJobLink("recent-result-job-title")
+});
+
 window.addEventListener("load", onLoad);

@@ -104,6 +104,14 @@ header {
     padding: 2em;
 }
 
+#recent-result-job-title, #history-job-title{
+    cursor: pointer;
+}
+
+#recent-result-job-title:hover, #history-job-title:hover{
+    color: var(--primary);
+}
+
 #recent-result-content {
     text-align: center;
     display: flex;
